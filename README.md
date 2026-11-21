@@ -147,6 +147,54 @@ QOREFLOW_ADDRESS=0x… npm run verify:deployment
 
 ---
 
+## Deploy the frontend to Vercel
+
+The app is a standard Next.js 15 App Router project: no build-time secrets, no custom server and no `vercel.json` required. The only server-side code is `/api/evm-window`, which runs as a Vercel Function and proxies the QoreChain REST API (with the required 0x → bech32 conversion).
+
+1. Push the repository to GitHub.
+2. Open <https://vercel.com/new>, sign in with GitHub and import the repository.
+3. Keep **Root Directory** at the repository root. Vercel detects **Next.js** and uses `npm run build` / `.next` automatically.
+4. In **Settings → General → Node.js Version**, select **22.x**. The repo pins `engines: >=22 <23` and `.nvmrc` 22.
+5. Add these environment variables for **Production** (add them to **Preview** too if you want preview URLs to work):
+
+| Name | Value |
+| --- | --- |
+| `NEXT_PUBLIC_QORECHAIN_RPC` | `https://evm-testnet.qore.host` |
+| `NEXT_PUBLIC_QORECHAIN_REST` | `https://api-testnet.qore.host` |
+| `NEXT_PUBLIC_CONTRACT_ADDRESS` | `0x5963C1Fb94e71BBDaF74AD6d2E9a2573c5d93140` |
+| `NEXT_PUBLIC_DEPLOY_BLOCK` | `10423689` |
+| `NEXT_PUBLIC_EXPLORER_URL` | `https://explore.qore.network` (optional) |
+| `NEXT_PUBLIC_CHAIN_ID` | `9800` (optional; the chain is also pinned in code) |
+
+6. Click **Deploy**.
+7. Check the proxy before testing the UI:
+
+```bash
+curl -s "https://<your-project>.vercel.app/api/evm-window?address=0x2CACF0B81D218fd598A5Ef72A442Fc944ddFe02B" | jq
+```
+
+It should return the window JSON (`found: true`, `live: false` for the consumed deployment window). A `400` means the address was malformed; a `502` means Vercel could not reach the QoreChain REST API.
+
+8. Open the site, switch the wallet to QoreChain Diana (9800) and open `/security`. Read-only pages work immediately.
+
+**Important:** `NEXT_PUBLIC_*` values are embedded at **build time**. After changing one, trigger a new deployment — editing the environment variable alone does not change an existing build.
+
+**Never add** `DEPLOYER_PRIVATE_KEY`, `TESTNET_SENDER_PRIVATE_KEY` or `TESTNET_PQC_SECRET_KEY_HEX` to Vercel. The hosted app needs no private key: reads use the public RPC, writes are signed by the visitor's wallet, and cancellation signatures are produced in the browser.
+
+**Writes still need an EVM window.** Creating or cancelling a stream requires a live window scoped to QoreFlow. Until one is open, `/security` reports the window as stale and the cancellation panel stays blocked — that is the chain's second security layer, not a frontend error.
+
+CLI alternative:
+
+```bash
+npm i -g vercel
+vercel login
+vercel link
+vercel env add NEXT_PUBLIC_CONTRACT_ADDRESS production   # repeat per variable
+vercel --prod
+```
+
+---
+
 ## Real testnet checks
 
 Once the environment has a funded PQC-registered account and a deployed contract:
