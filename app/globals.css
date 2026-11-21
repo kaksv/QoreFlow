@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+      monospace;
+
+    --background: 216 48% 6%;
+    --foreground: 210 32% 96%;
+    --card: 215 42% 9%;
+    --card-foreground: 210 32% 96%;
+    --muted: 215 30% 14%;
+    --muted-foreground: 214 16% 66%;
+    --border: 215 28% 18%;
+    --input: 215 28% 20%;
+    --ring: 160 84% 45%;
+    --primary: 160 84% 45%;
+    --primary-foreground: 200 60% 6%;
+    --secondary: 174 62% 40%;
+    --secondary-foreground: 200 60% 6%;
+    --accent: 168 70% 16%;
+    --accent-foreground: 160 84% 82%;
+    --destructive: 356 70% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --positive: 152 72% 48%;
+    --warning: 38 92% 55%;
+    --radius: 0.875rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image: radial-gradient(
+        900px 480px at 78% -12%,
+        hsl(168 70% 22% / 0.32),
+        transparent 70%
+      ),
+      radial-gradient(
+        700px 400px at 8% 0%,
+        hsl(190 70% 20% / 0.22),
+        transparent 65%
+      );
+    background-repeat: no-repeat;
+    font-feature-settings: "cv02", "cv03", "cv04", "tnum";
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .hairline {
+    box-shadow: inset 0 1px 0 0 hsl(210 40% 100% / 0.04);
+  }
+}

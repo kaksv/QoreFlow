@@ -1,0 +1,22 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+coverage.json
+artifacts/
+cache/
+typechain-types/
+# Local deployment records are disposable; testnet records are submission evidence.
+deployments/localhost.json
+deployments/31337.json
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vercel
+tsconfig.tsbuildinfo
+
+# Generated for Remix/etherscan-style single-file deploys (regenerate with npx hardhat flatten)
+*.flat.sol

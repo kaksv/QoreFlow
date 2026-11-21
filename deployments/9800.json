@@ -1,0 +1,18 @@
+{
+  "network": "qorechainTestnet",
+  "chainId": 9800,
+  "deployer": "0x2CACF0B81D218fd598A5Ef72A442Fc944ddFe02B",
+  "qoreFlow": "0x5963C1Fb94e71BBDaF74AD6d2E9a2573c5d93140",
+  "qoreFlowTx": "0x831e02bae7ef2c5b0dd144604532fc259606c9379d4a5dabd64234e28e3b401b",
+  "qoreFlowBlock": 10423689,
+  "pqcVerifier": "0x1694b895a12Ab327512D01A91E3C9dfe506E61f4",
+  "pqcVerifierTx": "0xecedb61753573e04c84729127fb7975dc63f2bd90d60d01acfe4a82210a22c56",
+  "pqcVerifierBlock": 10423612,
+  "pqcVerifyPrecompile": "0x0000000000000000000000000000000000000a01",
+  "pqcKeyStatusPrecompile": "0x0000000000000000000000000000000000000a02",
+  "deploymentMethod": "remix",
+  "deployedAt": "2026-11-20T08:50:39.000Z",
+  "canonicalWiring": true,
+  "recordedAt": "2026-11-21",
+  "note": "Written from on-chain reads after a Remix deployment. Both receipts have status 1. No transaction was broadcast by QoreFlow tooling."
+}
